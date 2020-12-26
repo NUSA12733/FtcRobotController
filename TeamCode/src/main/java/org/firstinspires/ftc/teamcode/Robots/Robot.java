@@ -48,6 +48,7 @@ public class Robot {
         NONE
     }
 
+    protected DcMotor driveMotors [];
     
     //Constructor for TeleOp Robot
     public Robot(Gamepad gamepad1, Gamepad gamepad2, HardwareMap hm, Telemetry t){
@@ -90,6 +91,8 @@ public class Robot {
         converter = new CentimetersToEncodersConverter();
         leftLaunch.setPosition(0);
         positionSafetyStop(Direction.UP);
+
+         driveMotors = new DcMotor[] {frontR, frontL, backR, backL};
     }
 
     protected void setIntakePower(double power){
