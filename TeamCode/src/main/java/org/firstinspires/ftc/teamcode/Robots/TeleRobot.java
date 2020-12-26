@@ -51,9 +51,9 @@ public class TeleRobot extends Robot {
 
         //CLAW
         if(driverController.a){
-            this.grabStick();
+            this.moveClaw(Direction.FORWARD);
         } else if (driverController.b){
-            this.releaseStick();
+            this.moveClaw(Direction.BACKWARD);
         }
 
 
@@ -88,8 +88,6 @@ public class TeleRobot extends Robot {
         if(assistantController.dpad_right){
             threeShotFunction();
         }
-
-
 
         //Servo testing
         if(assistantController.x){

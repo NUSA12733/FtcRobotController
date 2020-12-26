@@ -102,7 +102,6 @@ public class Robot {
     protected void shoot(double power){
         shooterRight.setPower(power);
         shooterLeft.setPower(power);
-
     }
 
     protected void pushRing(Direction pushDirection){
@@ -136,12 +135,12 @@ public class Robot {
         }
     }
 
-    protected void grabStick(){
-        clamp.setPosition(1);
-    }
-
-    protected void releaseStick(){
-        clamp.setPosition(0.4);
+    protected void moveClaw(Direction dir) {
+        if(dir.equals(Direction.FORWARD)){
+            clamp.setPosition(1);
+        } else if(dir.equals(Direction.BACKWARD)){
+            clamp.setPosition(0.4);
+        }
     }
 
     protected void positionSafetyStop(Direction direction){
