@@ -35,7 +35,6 @@ public class Robot {
 
 //    private OpenCV openCV;
 
-    private boolean intakeIsActive = false;
 
     protected enum Direction{
         FORWARD,
@@ -62,7 +61,6 @@ public class Robot {
     public Robot(HardwareMap hm, Telemetry t){
         this.t = t;
         init(hm, t);
-
     }
 
     //Hardware Initialization
