@@ -5,11 +5,16 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Route;
+import org.firstinspires.ftc.teamcode.Routes.RouteA;
+import org.firstinspires.ftc.teamcode.Routes.RouteB;
+import org.firstinspires.ftc.teamcode.Routes.RouteC;
 
 public class AutoRobot extends Robot {
     private OpMode op;
     private ObjectDetector ringDetector;
 //    private NormalizedColorSensor colorSensor;
+    private Route route;
 
     private enum RUNMODE {
         WITH_ENCODERS,
@@ -97,10 +102,28 @@ public class AutoRobot extends Robot {
         }
     }
 
-    public void execAuto(){
-        final int numRings = getNumberOfRings();
-        t.addData("Rings:", numRings);
+    private void setRoute(){
+        int numRings = getNumberOfRings();
+        if(numRings == 0){
+            route = new RouteA();
+            t.addLine("Executing Route A");
+        } else if(numRings == 1){
+            route = new RouteB();
+            t.addLine("Executing Route B");
+        } else if(numRings ==4){
+            route = new RouteC();
+            t.addLine("Excecuting Route C");
+        }
+
         t.update();
+    }
+
+    public void execAuto(){
+//        final int numRings = getNumberOfRings();
+//        t.addData("Rings:", numRings);
+//        t.update();
+
+        this.setRoute();
     }
 
 
