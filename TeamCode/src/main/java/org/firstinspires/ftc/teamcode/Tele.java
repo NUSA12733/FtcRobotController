@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Robots.TeleRobot;
 
 @TeleOp
-public class TeleOp2 extends LinearOpMode {
+public class Tele extends LinearOpMode {
 
 
     @Override
