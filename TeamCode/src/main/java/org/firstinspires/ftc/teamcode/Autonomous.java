@@ -8,18 +8,18 @@ import org.firstinspires.ftc.teamcode.Robots.Robot;
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous
 public class Autonomous extends LinearOpMode {
 
-    public void initialize(){}
+    AutoRobot robot;
+    public void initialize(){
+        robot = new AutoRobot(hardwareMap, telemetry, this);
+        robot.initRingDetection();
+        waitForStart();
+    }
 
 
     @Override
     public void runOpMode() throws InterruptedException {
-        AutoRobot robot = new AutoRobot(hardwareMap, telemetry, this);
+        initialize();
         robot.execAuto();
-        sleep(10000);
-
-
-
-
-
+        sleep(3000);
     }
 }

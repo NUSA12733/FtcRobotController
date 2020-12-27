@@ -1,18 +1,14 @@
 package org.firstinspires.ftc.teamcode.Robots;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.EasyOpenCVExample;
-import org.firstinspires.ftc.teamcode.Robots.Robot;
-import org.firstinspires.ftc.teamcode.Robots.OpenCV;
 
 public class AutoRobot extends Robot {
-    private OpenCV openCV;
     private OpMode op;
+    private ObjectDetector ringDetector;
 //    private NormalizedColorSensor colorSensor;
 
     private enum RUNMODE {
@@ -20,23 +16,16 @@ public class AutoRobot extends Robot {
         WITHOUT_ENCODERS
     }
 
-    public AutoRobot(HardwareMap hm, Telemetry t, OpMode op) {
+    public AutoRobot(HardwareMap hm, Telemetry t, LinearOpMode op) {
         super(hm, t);
-        this.openCV = new OpenCV(hm, t);
+//        this.openCV = new OpenCV(hm, t);
         this.op = op;
+        this.ringDetector = new ObjectDetector(hm, t, op);
 //        this.colorSensor = hm.get(NormalizedColorSensor.class, "colorSensor");
-        openCV.init();
+//        openCV.init();
 //        setMotorRunMode(RUNMODE.WITH_ENCODERS);
     }
 
-    public int getThreshold(){
-        return openCV.getThresholdVal();
-    }
-
-
-    public int getNumberRings(){
-        return openCV.getNumberOfRings();
-    }
 
 //    public void drive(double speed, int encoderTicks){
 //        this.resetEncoders();
@@ -80,12 +69,38 @@ public class AutoRobot extends Robot {
 //        }
 //    }
 
+//    private int getNumberOfRings(){
+//        ringDetector.init();
+//        String numRingsStr = ringDetector.run();
+//        int numRings;
+//        if(numRingsStr.equals("QUAD")){
+//            return 4;
+//        } else if(numRingsStr.equals("SINGLE")){
+//            return 1;
+//        } else {
+//            return 0;
+//        }
+//    }
+
+    public void initRingDetection(){
+        ringDetector.init();
+    }
+
+    private int getNumberOfRings(){
+        String output = ringDetector.run();
+        if(output.equals("Quad")){
+            return 4;
+        } else if(output.equals("Single")){
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     public void execAuto(){
-        int numRings = this.getNumberRings();
-        t.addData("RINGS", numRings);
+        final int numRings = getNumberOfRings();
+        t.addData("Rings:", numRings);
         t.update();
-
-
     }
 
 
