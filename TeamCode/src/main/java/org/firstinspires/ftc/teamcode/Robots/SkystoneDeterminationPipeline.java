@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Robots;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -9,9 +10,15 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 class SkystoneDeterminationPipeline extends OpenCvPipeline {
+        Telemetry t;
+
         /*
          * An enum to define the skystone position
          */
+        public SkystoneDeterminationPipeline(Telemetry t){
+            this.t = t;
+
+        }
         public enum RingPosition
         {
             FOUR,
@@ -28,10 +35,10 @@ class SkystoneDeterminationPipeline extends OpenCvPipeline {
         /*
          * The core values which define the location and size of the sample regions
          */
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(181,98);
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(215,110);
 
         static final int REGION_WIDTH = 35;
-        static final int REGION_HEIGHT = 25;
+        static final int REGION_HEIGHT = 36;
 
         final int FOUR_RING_THRESHOLD = 150;
         final int ONE_RING_THRESHOLD = 135;
@@ -109,5 +116,10 @@ class SkystoneDeterminationPipeline extends OpenCvPipeline {
         {
             return avg1;
         }
+
+        public RingPosition getPosition(){
+            return this.position;
+        }
+
     }
 

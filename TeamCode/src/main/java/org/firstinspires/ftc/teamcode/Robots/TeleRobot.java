@@ -60,7 +60,7 @@ public class TeleRobot extends Robot {
         //Assistant Driver
         //SHOOTING MECHANISM - start, stop
         if(assistantController.right_bumper){
-            shoot(1);
+            shoot(0.5);
         }
 
         if(assistantController.left_bumper){

@@ -165,27 +165,19 @@ public class Robot {
     }
 
     protected void threeShotFunction(){
-        shoot(0.7);
-        double waitTime = 5;
-        timer.startTime();
-        while(timer.time() < waitTime){
-            t.addData("Timer:" , timer.time());
-            t.update();
-        }
-        timer.reset();
-        waitTime = 1;
-        positionSafetyStop(Direction.DOWN);
-        pushRing(Direction.BACKWARD);
-        timer.startTime();
-        for(int i = 0; i < 3; i++) {
-            pushRing(Direction.FORWARD);
-            while (timer.time() < 3) {
-                t.addData("Time Remaining", waitTime - timer.time());
-                t.update();
+        try {
+            shoot(0.55);
+            Thread.sleep(3000);
+            positionSafetyStop(Direction.DOWN);
+            for(int i =0; i< 3; i++){
+                Thread.sleep(2000);
+                pushRing(Direction.FORWARD);
+                Thread.sleep(2000);
+                pushRing(Direction.BACKWARD);
             }
-            pushRing(Direction.BACKWARD);
-            timer.reset();
-
+        } catch (InterruptedException e){
+            t.addData("Exception was thrown", e);
+            t.update();
         }
 
 
