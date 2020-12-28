@@ -20,6 +20,6 @@ public class Autonomous extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         initialize();
         robot.execAuto();
-        sleep(3000);
+
     }
 }

@@ -3,23 +3,19 @@ package org.firstinspires.ftc.teamcode.Routes;
 import org.firstinspires.ftc.teamcode.Route;
 
 public class RouteC implements Route {
+
     @Override
-    public int getTicksToLine() {
+    public int getForwardInches() {
         return 0;
     }
 
     @Override
-    public int getTicksToBox() {
+    public int getSideInches() {
         return 0;
     }
 
     @Override
-    public void fireShots() {
-
-    }
-
-    @Override
-    public void park() {
-
+    public int getBackwardInches() {
+        return 0;
     }
 }

@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.Robots;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -12,11 +11,11 @@ import org.firstinspires.ftc.teamcode.Routes.RouteB;
 import org.firstinspires.ftc.teamcode.Routes.RouteC;
 
 public class AutoRobot extends Robot {
-    private OpMode op;
+    private LinearOpMode op;
     private ObjectDetector ringDetector;
 //    private NormalizedColorSensor colorSensor;
     private Route route;
-    private static final int ENCODER_TICKS_PER_REV = 134;
+    private static final double ENCODER_TICKS_PER_REV = 537.6;
     private static final double WHEEL_CIRCUMFERENCE = 2.95 * Math.PI;
     private static final int TICKS_PER_INCH = (int) Math.round(ENCODER_TICKS_PER_REV / WHEEL_CIRCUMFERENCE);
 
@@ -25,6 +24,10 @@ public class AutoRobot extends Robot {
         this.op = op;
         this.ringDetector = new ObjectDetector(hm, t, op);
 //        this.colorSensor = hm.get(NormalizedColorSensor.class, "colorSensor");
+    }
+
+    public int inchesToTicks(int inches){
+        return inches * TICKS_PER_INCH;
     }
 
     //DRIVING FUNCTIONS
@@ -40,10 +43,35 @@ public class AutoRobot extends Robot {
         }
     }
 
-    public void setAllMotorsTargetPos(int ticks){
+    public void setAllMotorsTargetPos(int inches){
         for (DcMotor motor: driveMotors){
-            motor.setTargetPosition(ticks);
+            motor.setTargetPosition(inchesToTicks(inches));
         }
+    }
+
+    public void setAllMotorsPower(double power){
+        for (DcMotor motor: driveMotors){
+            motor.setPower(power);
+        }
+    }
+
+    public void drive(Direction dir, double speed, int inches){
+        resetAllEncoders();
+
+        if (dir.equals(Direction.FORWARD)) {
+            setAllMotorsTargetPos(inches);
+        } else if(dir.equals(Direction.BACKWARD)){
+            setAllMotorsTargetPos(-inches);
+        }
+        setMotorsToRunToPosition();
+        setAllMotorsPower(speed);
+
+
+        while(frontR.isBusy() || backL.isBusy()){
+            t.addData("Moving to position:", frontR.getTargetPosition());
+            t.update();
+        }
+        setAllMotorsPower(0);
     }
 
 
@@ -81,8 +109,11 @@ public class AutoRobot extends Robot {
 //        final int numRings = getNumberOfRings();
 //        t.addData("Rings:", numRings);
 //        t.update();
-
         this.setRoute();
+        op.sleep(3000);
+        this.drive(Direction.FORWARD, 1, 24);//should be route.getForwardInches()
+//        op.sleep(500);
+//        this.drive(Direction.STRAFE_RIGHT, 1, route.getSideInches());
     }
 
 
