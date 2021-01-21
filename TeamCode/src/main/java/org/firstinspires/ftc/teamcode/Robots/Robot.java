@@ -92,7 +92,7 @@ public class Robot {
         leftLaunch.setPosition(0);
         positionSafetyStop(Direction.UP);
 
-         driveMotors = new DcMotor[] {frontR, frontL, backR, backL};
+         driveMotors = new DcMotor[] {frontR, frontL, backL, backR};
     }
 
     protected void setIntakePower(double power){
@@ -153,8 +153,6 @@ public class Robot {
     }
 
 
-
-
     //AUTO METHODS
     public void go(){
 
@@ -166,7 +164,7 @@ public class Robot {
 
     protected void threeShotFunction(){
         try {
-            shoot(0.55);
+            shoot(0.5);//should be .55
             Thread.sleep(3000);
             positionSafetyStop(Direction.DOWN);
             for(int i =0; i< 3; i++){

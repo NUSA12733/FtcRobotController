@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Robots;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -9,6 +10,9 @@ public class TeleRobot extends Robot {
 
     public TeleRobot(Gamepad gamepad1, Gamepad gamepad2, HardwareMap hm, Telemetry t) {
         super(gamepad1, gamepad2, hm, t);
+        for(DcMotor motor : driveMotors){
+            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
     }
 
     protected void setWheelPower(){

@@ -26,8 +26,11 @@ public class AutoRobot extends Robot {
 //        this.colorSensor = hm.get(NormalizedColorSensor.class, "colorSensor");
     }
 
-    public int inchesToTicks(int inches){
-        return inches * TICKS_PER_INCH;
+    public int inchesToTicks(int inches, Direction dir){
+
+
+//        return inches * TICKS_PER_INCH;
+        return dir.equals(Direction.STRAFE_RIGHT) || dir.equals(Direction.STRAFE_LEFT)? (int)Math.round(inches * TICKS_PER_INCH / 1.33): inches * TICKS_PER_INCH;
     }
 
     //DRIVING FUNCTIONS
@@ -43,31 +46,72 @@ public class AutoRobot extends Robot {
         }
     }
 
-    public void setAllMotorsTargetPos(int inches){
-        for (DcMotor motor: driveMotors){
-            motor.setTargetPosition(inchesToTicks(inches));
+    public void setAllMotorsTargetPos(int inches, Direction dir){
+        //GOING FORWARD
+        if(dir.equals(Direction.FORWARD)){
+            for (DcMotor motor: driveMotors){
+                motor.setTargetPosition(inchesToTicks(inches, dir));
+            }
         }
+        //GOING BACKWARD
+        else if(dir.equals(Direction.BACKWARD)){
+            for (DcMotor motor: driveMotors){
+                motor.setTargetPosition(-inchesToTicks(inches, dir));
+            }
+        }
+        //STRAFING RIGHT
+        else if (dir.equals(Direction.STRAFE_RIGHT)){
+            for(int i = 0; i < driveMotors.length; i++ ) {
+                driveMotors[i].setTargetPosition(i % 2 == 0 ? -inchesToTicks(inches, dir): inchesToTicks(inches, dir));
+            }
+        }
+        //STRAFING LEFT
+        else if (dir.equals(Direction.STRAFE_LEFT)){
+            for(int i = 0; i < driveMotors.length; i++ ) {
+                driveMotors[i].setTargetPosition(i % 2 == 0 ? inchesToTicks(inches, dir): -inchesToTicks(inches, dir));
+            }
+        }
+//        for (DcMotor motor: driveMotors){
+//            motor.setTargetPosition(inchesToTicks(inches));
+//        }
     }
 
     public void setAllMotorsPower(double power){
-        for (DcMotor motor: driveMotors){
-            motor.setPower(power);
-        }
+
+        //If motor is going forward or backward, set all motor powers the same
+
+            for (DcMotor motor: driveMotors){
+                motor.setPower(power);
+            }
+
+
+//        if(dir.equals(Direction.STRAFE_LEFT)|| dir.equals(Direction.STRAFE_RIGHT)){
+//            for(int i = 0; i < driveMotors.length; i++ ){
+////                driveMotors[i].setPower(i % 2 == 0 ? -power: power);
+//                if(i % 2 == 0){
+//                    driveMotors[i].setPower(power);
+//                }else {
+//                    driveMotors[i].setPower(-power);
+//                }
+//            }
+//        }
+
     }
 
     public void drive(Direction dir, double speed, int inches){
         resetAllEncoders();
 
-        if (dir.equals(Direction.FORWARD)) {
-            setAllMotorsTargetPos(inches);
-        } else if(dir.equals(Direction.BACKWARD)){
-            setAllMotorsTargetPos(-inches);
-        }
+//        if (dir.equals(Direction.FORWARD) || dir.equals(Direction.STRAFE_RIGHT)) {
+//            setAllMotorsTargetPos(inches);
+//        } else if(dir.equals(Direction.BACKWARD)||dir.equals(Direction.STRAFE_LEFT)){
+//            setAllMotorsTargetPos(-inches);
+//        }
+        setAllMotorsTargetPos(inches, dir);
         setMotorsToRunToPosition();
         setAllMotorsPower(speed);
 
 
-        while(frontR.isBusy() || backL.isBusy()){
+        while(frontR.isBusy() || backL.isBusy() || frontL.isBusy() || backR.isBusy()){
             t.addData("Moving to position:", frontR.getTargetPosition());
             t.update();
         }
@@ -106,19 +150,28 @@ public class AutoRobot extends Robot {
     }
 
     public void execAuto(){
-//        final int numRings = getNumberOfRings();
-//        t.addData("Rings:", numRings);
-//        t.update();
         this.setRoute();
-        op.sleep(3000);
-        this.drive(Direction.FORWARD, 1, 24);//should be route.getForwardInches()
-//        op.sleep(500);
-//        this.drive(Direction.STRAFE_RIGHT, 1, route.getSideInches());
+        this.moveClaw(Direction.FORWARD);
+        op.sleep(250);
+        if(route.getCircumInches() != 0){
+            this.drive(Direction.STRAFE_LEFT, 0.5, route.getCircumInches());
+            op.sleep(250);
+        }
+        this.drive(Direction.FORWARD, 0.5, route.getForwardInches());
+        op.sleep(250);
+        this.drive(Direction.STRAFE_RIGHT, 0.5, route.getRightInches() + route.getCircumInches());
+        op.sleep(250);
+        this.moveClaw(Direction.BACKWARD);
+        op.sleep(750);
+        this.drive(Direction.STRAFE_LEFT,0.5, route.getLeftInches());
+        op.sleep(250);
+        this.drive(Direction.BACKWARD, 0.5, route.getBackwardInches());
+        op.sleep(250);
+        threeShotFunction();
+        op.sleep(2000);
+        this.drive(Direction.FORWARD, 0.5, route.getParkInches());
+
     }
-
-
-
-
 
 
 }

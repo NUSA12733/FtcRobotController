@@ -84,7 +84,7 @@ public class ObjectDetector {
     public String run() {
         String rec = "";
         if (opMode.opModeIsActive()) {
-            opMode.sleep(3000);
+            opMode.sleep(500);// should be 3000
             List<Recognition> recognitions = tfod.getUpdatedRecognitions();
 
             if (recognitions != null) {
