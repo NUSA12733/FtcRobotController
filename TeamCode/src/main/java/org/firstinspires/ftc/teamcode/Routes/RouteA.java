@@ -10,7 +10,17 @@ public class RouteA implements Route {
     }
 
     @Override
+    public double getForwardSpeed() {
+        return 0;
+    }
+
+    @Override
     public int getCircumInches() {
+        return 0;
+    }
+
+    @Override
+    public double getCircumSpeed() {
         return 0;
     }
 
@@ -20,8 +30,18 @@ public class RouteA implements Route {
     }
 
     @Override
+    public double getRightSpeed() {
+        return 0;
+    }
+
+    @Override
     public int getLeftInches(){
         return 20;
+    }
+
+    @Override
+    public double getLeftSpeed() {
+        return 0;
     }
 
     @Override
@@ -30,7 +50,17 @@ public class RouteA implements Route {
     }
 
     @Override
+    public double getBackwardSpeed() {
+        return 0;
+    }
+
+    @Override
     public int getParkInches() {
         return 14;
+    }
+
+    @Override
+    public double getParkSpeed() {
+        return 0;
     }
 }

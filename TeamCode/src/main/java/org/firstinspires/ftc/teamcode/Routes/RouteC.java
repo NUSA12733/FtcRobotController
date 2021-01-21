@@ -10,8 +10,18 @@ public class RouteC implements Route {
     }
 
     @Override
+    public double getForwardSpeed() {
+        return 0;
+    }
+
+    @Override
     public int getCircumInches() {
         return 36;
+    }
+
+    @Override
+    public double getCircumSpeed() {
+        return 0;
     }
 
     @Override
@@ -20,9 +30,19 @@ public class RouteC implements Route {
     }//25
 
     @Override
+    public double getRightSpeed() {
+        return 0;
+    }
+
+    @Override
     public int getLeftInches(){
         return 15;
     }//20
+
+    @Override
+    public double getLeftSpeed() {
+        return 0;
+    }
 
     @Override
     public int getBackwardInches() {
@@ -30,7 +50,17 @@ public class RouteC implements Route {
     }
 
     @Override
+    public double getBackwardSpeed() {
+        return 0;
+    }
+
+    @Override
     public int getParkInches() {
         return 10;
+    }
+
+    @Override
+    public double getParkSpeed() {
+        return 0;
     }
 }
