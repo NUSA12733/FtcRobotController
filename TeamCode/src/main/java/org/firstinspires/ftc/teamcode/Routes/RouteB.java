@@ -6,12 +6,12 @@ public class RouteB implements Route {
 
     @Override
     public int getForwardInches() {
-        return 70;
+        return 75;
     }
 
     @Override
     public double getForwardSpeed() {
-        return 0;
+        return 1;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class RouteB implements Route {
 
     @Override
     public double getCircumSpeed() {
-        return 0;
+        return 0.5;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class RouteB implements Route {
 
     @Override
     public double getRightSpeed() {
-        return 0;
+        return 0.5;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class RouteB implements Route {
 
     @Override
     public double getLeftSpeed() {
-        return 0;
+        return 0.5;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class RouteB implements Route {
 
     @Override
     public double getBackwardSpeed() {
-        return 0;
+        return 0.5;
     }
 
     @Override
@@ -61,6 +61,6 @@ public class RouteB implements Route {
 
     @Override
     public double getParkSpeed() {
-        return 0;
+        return 0.5;
     }
 }

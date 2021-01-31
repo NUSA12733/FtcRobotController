@@ -97,7 +97,7 @@ public class Robot {
 
     protected void setIntakePower(double power){
         rearIntake.setPower(power);
-        frontIntake.setPower(power);
+        frontIntake.setPower(power - 0.2);
     }
 
     protected void shoot(double power){
@@ -165,12 +165,12 @@ public class Robot {
     protected void threeShotFunction(){
         try {
             shoot(0.5);//should be .55
-            Thread.sleep(3000);
+            Thread.sleep(1500);
             positionSafetyStop(Direction.DOWN);
             for(int i =0; i< 3; i++){
                 Thread.sleep(2000);
                 pushRing(Direction.FORWARD);
-                Thread.sleep(2000);
+                Thread.sleep(1000);
                 pushRing(Direction.BACKWARD);
             }
         } catch (InterruptedException e){

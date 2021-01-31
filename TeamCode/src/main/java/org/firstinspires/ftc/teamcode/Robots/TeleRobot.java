@@ -11,7 +11,7 @@ public class TeleRobot extends Robot {
     public TeleRobot(Gamepad gamepad1, Gamepad gamepad2, HardwareMap hm, Telemetry t) {
         super(gamepad1, gamepad2, hm, t);
         for(DcMotor motor : driveMotors){
-            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
     }
 
@@ -36,9 +36,9 @@ public class TeleRobot extends Robot {
         //DRIVER CONTROLLER
 
         //LIFT - up, down, stop
-        if(driverController.right_trigger !=0){
+        if(assistantController.right_trigger !=0){
             moveLift(Direction.UP);
-        } else if(driverController.left_trigger != 0){
+        } else if(assistantController.left_trigger != 0){
             moveLift(Direction.DOWN);
         } else {
             moveLift(Direction.NONE);
@@ -78,6 +78,10 @@ public class TeleRobot extends Robot {
 
         if(assistantController.b){
             setIntakePower(0);
+        }
+
+        if(assistantController.dpad_left){
+            setIntakePower(-1);
         }
 
         //SAFETY STOP

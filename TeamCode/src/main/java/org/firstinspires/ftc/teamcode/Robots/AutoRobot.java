@@ -23,6 +23,7 @@ public class AutoRobot extends Robot {
         super(hm, t);
         this.op = op;
         this.ringDetector = new ObjectDetector(hm, t, op);
+        this.moveClaw(Direction.FORWARD);
 //        this.colorSensor = hm.get(NormalizedColorSensor.class, "colorSensor");
     }
 
@@ -151,25 +152,48 @@ public class AutoRobot extends Robot {
 
     public void execAuto(){
         this.setRoute();
-        this.moveClaw(Direction.FORWARD);
-        op.sleep(250);
-        if(route.getCircumInches() != 0){
-            this.drive(Direction.STRAFE_LEFT, 0.5, route.getCircumInches());
+        if(route instanceof RouteA || route instanceof  RouteC){
+//            this.moveClaw(Direction.FORWARD);
             op.sleep(250);
+            if(route.getCircumInches() != 0){
+                this.drive(Direction.STRAFE_LEFT, route.getCircumSpeed(), route.getCircumInches());
+                op.sleep(250);
+            }
+            this.drive(Direction.FORWARD, route.getForwardSpeed(), route.getForwardInches());
+            op.sleep(250);
+            this.drive(Direction.STRAFE_RIGHT, route.getRightSpeed(), route.getRightInches() + route.getCircumInches());
+            op.sleep(250);
+            this.moveClaw(Direction.BACKWARD);
+            op.sleep(750);
+            this.drive(Direction.STRAFE_LEFT,route.getLeftSpeed(), route.getLeftInches());
+            op.sleep(250);
+            this.drive(Direction.BACKWARD, route.getBackwardSpeed(), route.getBackwardInches());
+            op.sleep(250);
+            threeShotFunction();
+            op.sleep(2000);
+            this.drive(Direction.FORWARD, route.getParkSpeed(), route.getParkInches());
+        } else {
+//            this.moveClaw(Direction.FORWARD);
+            op.sleep(250);
+            this.drive(Direction.STRAFE_LEFT, route.getCircumSpeed(), route.getCircumInches());
+            op.sleep(250);
+            this.drive(Direction.FORWARD, route.getForwardSpeed(), route.getForwardInches());
+            op.sleep(250);
+            this.drive(Direction.STRAFE_RIGHT, 0.5, 10);
+            op.sleep(250);
+            this.moveClaw(Direction.BACKWARD);
+            op.sleep(500);
+            this.drive(Direction.STRAFE_LEFT, 0.5, 10);
+            op.sleep(250);
+            this.drive(Direction.BACKWARD, 0.6, 27);
+            op.sleep(250);
+            this.drive(Direction.STRAFE_RIGHT, 0.6, 38);
+            op.sleep(250);
+            this.threeShotFunction();
+            op.sleep(1500);
+            this.drive(Direction.FORWARD, 1, 25);
+
         }
-        this.drive(Direction.FORWARD, 0.5, route.getForwardInches());
-        op.sleep(250);
-        this.drive(Direction.STRAFE_RIGHT, 0.5, route.getRightInches() + route.getCircumInches());
-        op.sleep(250);
-        this.moveClaw(Direction.BACKWARD);
-        op.sleep(750);
-        this.drive(Direction.STRAFE_LEFT,0.5, route.getLeftInches());
-        op.sleep(250);
-        this.drive(Direction.BACKWARD, 0.5, route.getBackwardInches());
-        op.sleep(250);
-        threeShotFunction();
-        op.sleep(2000);
-        this.drive(Direction.FORWARD, 0.5, route.getParkInches());
 
     }
 
