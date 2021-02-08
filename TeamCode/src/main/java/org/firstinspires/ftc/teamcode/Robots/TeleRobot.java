@@ -19,15 +19,34 @@ public class TeleRobot extends Robot {
         double drive;
         double turn;
         double drift;
+        double adjValue = 0.4;
 
-        drive = -driverController.left_stick_y;
-        turn = driverController.right_stick_x;
-        drift = driverController.left_stick_x;
+        if (driverController.left_stick_y != 0 || driverController.right_stick_x != 0 || driverController.left_stick_x != 0) {
+            drive = -driverController.left_stick_y;
+            turn = driverController.right_stick_x;
+            drift = driverController.left_stick_x;
 
-        this.frontL.setPower(drive + turn + drift);
-        this.backL.setPower(drive + turn - drift);
-        this.frontR.setPower(drive - turn - drift);
-        this.backR.setPower(drive - turn + drift);
+            this.frontL.setPower(drive + turn + drift);
+            this.backL.setPower(drive + turn - drift);
+            this.frontR.setPower(drive - turn - drift);
+            this.backR.setPower(drive - turn + drift);
+        } else if(driverController.dpad_right){
+            this.frontL.setPower(adjValue);
+            this.backL.setPower(adjValue);
+            this.frontR.setPower(-adjValue);
+            this.backR.setPower(-adjValue);
+        } else if(driverController.dpad_left){
+            this.frontL.setPower(-adjValue);
+            this.backL.setPower(-adjValue);
+            this.frontR.setPower(adjValue);
+            this.backR.setPower(adjValue);
+        } else {
+            this.frontL.setPower(0);
+            this.backL.setPower(0);
+            this.frontR.setPower(0);
+            this.backR.setPower(0);
+        }
+
     }
 
     public void driverControl(){

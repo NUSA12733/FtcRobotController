@@ -71,35 +71,13 @@ public class AutoRobot extends Robot {
     }
 
     public void setAllMotorsPower(double power){
-
-        //If motor is going forward or backward, set all motor powers the same
-
             for (DcMotor motor: driveMotors){
                 motor.setPower(power);
             }
-
-
-//        if(dir.equals(Direction.STRAFE_LEFT)|| dir.equals(Direction.STRAFE_RIGHT)){
-//            for(int i = 0; i < driveMotors.length; i++ ){
-////                driveMotors[i].setPower(i % 2 == 0 ? -power: power);
-//                if(i % 2 == 0){
-//                    driveMotors[i].setPower(power);
-//                }else {
-//                    driveMotors[i].setPower(-power);
-//                }
-//            }
-//        }
-
     }
 
     public void drive(Direction dir, double speed, int inches){
         resetAllEncoders();
-
-//        if (dir.equals(Direction.FORWARD) || dir.equals(Direction.STRAFE_RIGHT)) {
-//            setAllMotorsTargetPos(inches);
-//        } else if(dir.equals(Direction.BACKWARD)||dir.equals(Direction.STRAFE_LEFT)){
-//            setAllMotorsTargetPos(-inches);
-//        }
         setAllMotorsTargetPos(inches, dir);
         setMotorsToRunToPosition();
         setAllMotorsPower(speed);
