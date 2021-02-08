@@ -13,7 +13,6 @@ import org.firstinspires.ftc.teamcode.Routes.RouteC;
 public class AutoRobot extends Robot {
     private LinearOpMode op;
     private ObjectDetector ringDetector;
-//    private NormalizedColorSensor colorSensor;
     private Route route;
     private static final double ENCODER_TICKS_PER_REV = 537.6;
     private static final double WHEEL_CIRCUMFERENCE = 2.95 * Math.PI;
@@ -24,14 +23,11 @@ public class AutoRobot extends Robot {
         this.op = op;
         this.ringDetector = new ObjectDetector(hm, t, op);
         this.moveClaw(Direction.FORWARD);
-//        this.colorSensor = hm.get(NormalizedColorSensor.class, "colorSensor");
     }
 
     public int inchesToTicks(int inches, Direction dir){
-
-
-//        return inches * TICKS_PER_INCH;
-        return dir.equals(Direction.STRAFE_RIGHT) || dir.equals(Direction.STRAFE_LEFT)? (int)Math.round(inches * TICKS_PER_INCH / 1.33): inches * TICKS_PER_INCH;
+        return dir.equals(Direction.STRAFE_RIGHT) || dir.equals(Direction.STRAFE_LEFT)?
+                (int)Math.round(inches * TICKS_PER_INCH / 1.33): inches * TICKS_PER_INCH;
     }
 
     //DRIVING FUNCTIONS
@@ -72,9 +68,6 @@ public class AutoRobot extends Robot {
                 driveMotors[i].setTargetPosition(i % 2 == 0 ? inchesToTicks(inches, dir): -inchesToTicks(inches, dir));
             }
         }
-//        for (DcMotor motor: driveMotors){
-//            motor.setTargetPosition(inchesToTicks(inches));
-//        }
     }
 
     public void setAllMotorsPower(double power){
@@ -187,7 +180,7 @@ public class AutoRobot extends Robot {
             op.sleep(250);
             this.drive(Direction.BACKWARD, 0.6, 27);
             op.sleep(250);
-            this.drive(Direction.STRAFE_RIGHT, 0.6, 38);
+            this.drive(Direction.STRAFE_RIGHT, 0.6, 45);
             op.sleep(250);
             this.threeShotFunction();
             op.sleep(1500);

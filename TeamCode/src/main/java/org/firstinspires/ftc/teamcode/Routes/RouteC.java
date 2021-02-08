@@ -56,7 +56,7 @@ public class RouteC implements Route {
 
     @Override
     public int getParkInches() {
-        return 35;
+        return 20;
     }
 
     @Override

@@ -6,7 +6,7 @@ public class RouteA implements Route {
 
     @Override
     public int getForwardInches() {
-        return 53;
+        return 58; //53
     }
 
     @Override

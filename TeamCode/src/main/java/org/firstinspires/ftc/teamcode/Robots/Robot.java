@@ -177,7 +177,5 @@ public class Robot {
             t.addData("Exception was thrown", e);
             t.update();
         }
-
-
     }
 }

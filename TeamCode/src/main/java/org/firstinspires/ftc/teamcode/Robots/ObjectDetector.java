@@ -84,7 +84,7 @@ public class ObjectDetector {
     public String run() {
         String rec = "";
         if (opMode.opModeIsActive()) {
-            opMode.sleep(500);// should be 3000
+            opMode.sleep(500);
             List<Recognition> recognitions = tfod.getUpdatedRecognitions();
 
             if (recognitions != null) {
@@ -95,7 +95,6 @@ public class ObjectDetector {
             } else {
                 return null;
             }
-
             tfod.shutdown();
         }
         return rec;
@@ -126,7 +125,7 @@ public class ObjectDetector {
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
-        tfodParameters.minResultConfidence = 0.8f;
+        tfodParameters.minResultConfidence = 0.6f; //should be 0.8f
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
     }
