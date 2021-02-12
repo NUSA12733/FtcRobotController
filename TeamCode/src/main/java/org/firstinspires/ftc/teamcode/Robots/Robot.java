@@ -97,7 +97,7 @@ public class Robot {
 
     protected void setIntakePower(double power){
         rearIntake.setPower(power);
-        frontIntake.setPower(power - 0.2);
+        frontIntake.setPower(power); //-0.2
     }
 
     protected void shoot(double power){
